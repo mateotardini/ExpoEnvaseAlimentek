@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: 747153d7aabe57c469bfce7629cb466e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - playerCamera: {instanceID: 0}
+  - gameController: {instanceID: 0}
+  - scriptGameController: {instanceID: 0}
+  - infoUsuario: {instanceID: 0}
+  - selectStand: {instanceID: 0}
+  - link: {instanceID: 0}
+  - analytics: {instanceID: 0}
+  - information: {instanceID: 0}
+  - Mycolor: {instanceID: 0}
+  - ChatPrefab: {instanceID: 0}
+  - DNIPrefab: {fileID: 1240719108899645650, guid: 0852a0123acff464da55480128d31712,
+      type: 3}
+  - PanelInteraccioPrefab: {instanceID: 0}
+  - RequestPrefab: {fileID: 8878025008559328071, guid: e737c0be0439e6444b82e9c45d21e259,
+      type: 3}
+  - AvisoPrefab: {fileID: 8878025008559328071, guid: 435da665e9bf56940ba535b54632b69b,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
