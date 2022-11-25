@@ -99,14 +99,13 @@ public class Busqueda : MonoBehaviour
     }
 
     IEnumerator Search_In_DB(string Search) {
-        print(Search);
         WWWForm form = new WWWForm();
         form.AddField("Search", Search);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/SearchInDB.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/SearchInDB.php", form))
         {
             yield return www.SendWebRequest();
-
+            Debug.Log(www.downloadHandler.text);
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
@@ -120,7 +119,6 @@ public class Busqueda : MonoBehaviour
                 {
                     GameObject Result = Instantiate(PrefabResult, ContentBusqueda);
                     ResultadosBusquedaScript script = Result.GetComponent<ResultadosBusquedaScript>();
-                    print(i);
                     script.SetData(www.downloadHandler.text.Split('|')[i * 4], www.downloadHandler.text.Split('|')[i * 4 + 1], www.downloadHandler.text.Split('|')[i * 4 + 2], www.downloadHandler.text.Split('|')[i * 4 + 3]);
                 }
 
@@ -153,48 +151,4 @@ public class Busqueda : MonoBehaviour
         ResultadosBusquedaPanel.SetActive(false);
     }
 
-    /*public void BuscarEnMapaPorInput()
-    {
-        for (int i = 0; i < BotonesDePabellones[4].transform.childCount; i++)
-        {
-            ResultadosBusquedaScript script = BotonesDePabellones[4].transform.GetChild(i).GetComponent<ResultadosBusquedaScript>();
-            if (script != null)
-            {
-                if (script.nombreEmpresa.ToUpper().Contains(InputBusqueda.text.ToUpper()) || script.Rubro.ToUpper().Contains(InputBusqueda.text.ToUpper()) || script.Subrubro.ToUpper().Contains(InputBusqueda.text.ToUpper()))
-                {
-                    BotonesDePabellones[4].transform.GetChild(i).gameObject.SetActive(true);
-                    string cropSearch = script.nombreEmpresa.Substring(0, InputBusqueda.text.Length);
-                    if (cropSearch.ToUpper() == InputBusqueda.text.ToUpper()) {
-                        BotonesDePabellones[4].transform.GetChild(i).SetAsFirstSibling();
-                    }
-                    ContadorDeResultados = ContadorDeResultados + 1;
-                }
-                else
-                    BotonesDePabellones[4].transform.GetChild(i).gameObject.SetActive(false);
-            }
-            else
-                BotonesDePabellones[4].transform.GetChild(i).gameObject.SetActive(false);
-        }
-        if (ContadorDeResultados == 0) {
-            NumeroDeResultados.text = "No hay resultados de '" + InputBusqueda.text + "'.";
-            barraDebajoInput.color = CeroResultados;
-            textoSobreInput.color = CeroResultados;
-        }
-        else if (ContadorDeResultados != 1)
-        {
-            NumeroDeResultados.text = ContadorDeResultados + " resultados de '" + InputBusqueda.text + "'.";
-            barraDebajoInput.color = Resultados;
-            textoSobreInput.color = Resultados;
-        }
-        else
-        {
-            NumeroDeResultados.text = ContadorDeResultados + " resultado de '" + InputBusqueda.text + "'.";
-            barraDebajoInput.color = Resultados;
-            textoSobreInput.color = Resultados;
-        }
-        ResultadosBusquedaPanel.SetActive(true);
-        InputBusqueda.text = "";
-        dropdown.value = 0;
-        ContadorDeResultados = 0;
-    }*/
 }

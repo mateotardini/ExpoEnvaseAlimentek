@@ -23,7 +23,7 @@ public class AnalyticsPabellones : MonoBehaviour
 
         form.AddField("VisitasAlPabellon_" + thisPabellonActual.ToString(), 1);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/AnalyticsPrincipal.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/AnalyticsPrincipal.php", form))
         {
 
             yield return www.SendWebRequest();

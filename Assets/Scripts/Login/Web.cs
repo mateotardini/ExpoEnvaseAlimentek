@@ -68,7 +68,7 @@ public class Web : MonoBehaviour
             form.AddField("loginUser", username);
             form.AddField("loginPass", password);
 
-            using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/LoginINJnewdb.php", form))
+            using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/LoginINJnewdb.php", form))
             {
                 yield return www.SendWebRequest();
 
@@ -117,7 +117,7 @@ public class Web : MonoBehaviour
             form.AddField("loginPuesto", puesto);
 
 
-            using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/RegisterUser.php", form))
+            using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/RegisterUser.php", form))
             {
                 yield return www.SendWebRequest();
 
@@ -152,7 +152,7 @@ public class Web : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("loginEmail", email);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/Email-Pass-Recover.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/Email-Pass-Recover.php", form))
         {
             yield return www.SendWebRequest();
 
@@ -162,8 +162,6 @@ public class Web : MonoBehaviour
             }
             else
             {
-                //Debug.Log(www.downloadHandler.text);
-                //Main.Instance.UserInfo.SetInfo(username, password);
                 Main.Instance.UserInfo.SetID(www.downloadHandler.text.Split('|')[0]);
                 Main.Instance.UserInfo.SetDataRecover(www.downloadHandler.text);
             }
@@ -174,10 +172,9 @@ public class Web : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("UsuariosRegistrados", 1);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com.ar/VirtualExpo/AnalyticsPrincipal.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/AnalyticsPrincipal.php", form))
         {
             yield return www.SendWebRequest();
-
 
             if (www.isNetworkError || www.isHttpError)
             {

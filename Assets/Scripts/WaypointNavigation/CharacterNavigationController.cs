@@ -13,12 +13,6 @@ public class CharacterNavigationController : MonoBehaviour
     public Vector3 lastPosition;
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -35,24 +29,17 @@ public class CharacterNavigationController : MonoBehaviour
                 Quaternion targetRotation = Quaternion.LookRotation(destinationDirection);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
                 transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
-
             }
             else
             {
                 reachedDestination = true;
             }
-
             velocity = (transform.position - lastPosition) / Time.deltaTime;
             velocity.y = 0;
             var velocityMagnitud = velocity.magnitude;
             velocity = velocity.normalized;
             var fwDotProduct = Vector3.Dot(transform.forward, velocity);
             var rightDotProduct = Vector3.Dot(transform.right, velocity);
-
-
-           
-
-
         }
         
     }

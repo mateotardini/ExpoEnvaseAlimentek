@@ -6,9 +6,7 @@ using UnityEngine.Networking;
 
 public class Data_Stand : MonoBehaviour
 {
-    string URLPagina, URLPDF, URLConsulta;
     string NumeroDeStand;
-    string NombreEmpresa, Rubro, Ubicacion, Descripcion;
     public AnalitycsTest analytics;
 
     private void Awake()
@@ -16,84 +14,52 @@ public class Data_Stand : MonoBehaviour
         NumeroDeStand = this.transform.parent.name.Substring(0, 4);
     }
 
-    private void Start()
+#region Buttons Panel Stand
+    public void OpenConsulta(string url, string nombreEmpresa)
     {
-        NombreEmpresa = gameObject.name.Replace("_", " ");
+        #if UNITY_WEBGL
+        Application.ExternalEval("window.open('" + url + "' , '_blank')");
+        #else
+        Application.OpenURL(url);
+        #endif
+        analytics.ClickConsultas(nombreEmpresa);
     }
 
-    public void OpenConsulta()
+    public void OpenPaginaWeb(string url, string nombreEmpresa) {
+#if UNITY_WEBGL
+        Application.ExternalEval("window.open('" + url + "' , '_blank')");
+#else
+        Application.OpenURL(url);
+#endif
+        analytics.ClickPaginaWeb(nombreEmpresa);
+    }
+
+    public void OpenPDF(string url, string nombreEmpresa)
     {
 #if UNITY_WEBGL
-    Application.ExternalEval("window.open('" + URLConsulta + "' , '_blank')");
+        Application.ExternalEval("window.open('" + url + "' , '_blank')");
 #else
-        Application.OpenURL(URLConsulta);
+        Application.OpenURL(url);
 #endif
-        analytics.ClickConsultas();
+        analytics.ClickFolleto(nombreEmpresa);
     }
 
-    public void OpenPaginaWeb() {
-#if UNITY_WEBGL
-        Application.ExternalEval("window.open('" + URLPagina + "' , '_blank')");
-#else
-        Application.OpenURL(URLPagina);
-#endif
-        analytics.ClickPaginaWeb();
+    public void Cerrar(GameObject panelStand) {
+        panelStand.SetActive(false);
     }
+#endregion
 
-    public void OpenPDF()
+#region Get Data from DB
+    public void SetDataDB(GameObject panelStand)
     {
-#if UNITY_WEBGL
-        Application.ExternalEval("window.open('" + URLPDF + "' , '_blank')");
-#else
-        Application.OpenURL(URLPDF);
-#endif
-        analytics.ClickFolleto();
+        StartCoroutine(GetDataStandFromDB(NumeroDeStand, panelStand));   
     }
 
-    public void Cerrar() {
-
-    }
-
-    public void SetDataToStand(GameObject panelStand)
-    {
-        panelStand.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = NombreEmpresa;
-        panelStand.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Rubro;
-        panelStand.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = Descripcion;
-        panelStand.SetActive(true);
-
-        panelStand.transform.GetChild(3).gameObject.GetComponent<Button>().onClick.AddListener(OpenPDF);
-        panelStand.transform.GetChild(4).gameObject.GetComponent<Button>().onClick.AddListener(OpenPaginaWeb);
-        panelStand.transform.GetChild(5).gameObject.GetComponent<Button>().onClick.AddListener(OpenConsulta);
-        panelStand.transform.GetChild(6).gameObject.GetComponent<Button>().onClick.AddListener(Cerrar);
-        CheckLinks(panelStand.transform);
-    }
-
-    void CheckLinks(Transform panelStand)
-    {
-        if (string.IsNullOrEmpty(URLPDF))
-            panelStand.GetChild(3).gameObject.GetComponent<Button>().interactable = false;
-        else
-            panelStand.transform.GetChild(3).gameObject.GetComponent<Button>().interactable = true;
-        if (string.IsNullOrEmpty(URLPagina))
-            panelStand.GetChild(4).gameObject.GetComponent<Button>().interactable = false;
-        else
-            panelStand.GetChild(4).gameObject.GetComponent<Button>().interactable = true;
-        if (string.IsNullOrEmpty(URLConsulta))
-            panelStand.GetChild(5).gameObject.GetComponent<Button>().interactable = false;
-        else
-            panelStand.GetChild(5).gameObject.GetComponent<Button>().interactable = true;
-    }
-
-    public void SetDataDB(GameObject panelStands)
-    {
-        StartCoroutine(GetDataStandFromDB(NumeroDeStand, panelStands));   
-    }
-
-    public IEnumerator GetDataStandFromDB(string NumeroDeStand, GameObject panelStands) {
+    public IEnumerator GetDataStandFromDB(string NumeroDeStand, GameObject panelStand) {
         WWWForm form = new WWWForm();
         form.AddField("NumeroDeStand", NumeroDeStand);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/GetDataStandFromDB.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/GetDataStandFromDB.php", form))
         {
             yield return www.SendWebRequest();
 
@@ -103,14 +69,48 @@ public class Data_Stand : MonoBehaviour
             }
             else
             {
-                Rubro = www.downloadHandler.text.Split('|')[0];
-                Ubicacion = www.downloadHandler.text.Split('|')[1];
-                Descripcion = www.downloadHandler.text.Split('|')[2];
-                URLPagina = www.downloadHandler.text.Split('|')[3];
-                URLPDF = www.downloadHandler.text.Split('|')[4];
-                URLConsulta = www.downloadHandler.text.Split('|')[5];
-                SetDataToStand(panelStands);
+                string nombreEmpresa = www.downloadHandler.text.Split('|')[0];
+                string rubro = www.downloadHandler.text.Split('|')[1];
+                string ubicacion = www.downloadHandler.text.Split('|')[2];
+                string descripcion = www.downloadHandler.text.Split('|')[3];
+                string urlPagina = www.downloadHandler.text.Split('|')[4];
+                string urlPDF = www.downloadHandler.text.Split('|')[5];
+                string urlConsulta = www.downloadHandler.text.Split('|')[6];
+                SetDataToStand(panelStand, nombreEmpresa, rubro, ubicacion, descripcion, urlPagina, urlPDF, urlConsulta);
             }
         }
+    }
+
+    public void SetDataToStand(GameObject panelStand, string nombreEmpresa, string rubro, string ubicacion, string descripcion, string urlPDF, string urlPagina, string urlConsulta)
+    {
+        panelStand.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = nombreEmpresa;
+        panelStand.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = rubro;
+        panelStand.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = descripcion;
+        panelStand.SetActive(true);
+
+        panelStand.transform.GetChild(3).gameObject.GetComponent<Button>().onClick.AddListener(delegate{OpenPDF(urlPDF, nombreEmpresa);});
+        panelStand.transform.GetChild(4).gameObject.GetComponent<Button>().onClick.AddListener(delegate{OpenPaginaWeb(urlPagina, nombreEmpresa);});
+        panelStand.transform.GetChild(5).gameObject.GetComponent<Button>().onClick.AddListener(delegate{OpenConsulta(urlConsulta, nombreEmpresa);});
+        panelStand.transform.GetChild(6).gameObject.GetComponent<Button>().onClick.AddListener(delegate{Cerrar(panelStand);});
+        CheckLinks(panelStand.transform, urlPDF, urlPagina, urlConsulta);
+    }
+#endregion
+
+    void CheckLinks(Transform panelStand, string urlPDF, string urlPagina, string urlConsulta)
+    {
+        if (string.IsNullOrEmpty(urlPDF))
+            panelStand.GetChild(3).gameObject.GetComponent<Button>().interactable = false;
+        else
+            panelStand.transform.GetChild(3).gameObject.GetComponent<Button>().interactable = true;
+
+        if (string.IsNullOrEmpty(urlPagina))
+            panelStand.GetChild(4).gameObject.GetComponent<Button>().interactable = false;
+        else
+            panelStand.GetChild(4).gameObject.GetComponent<Button>().interactable = true;
+
+        if (string.IsNullOrEmpty(urlConsulta))
+            panelStand.GetChild(5).gameObject.GetComponent<Button>().interactable = false;
+        else
+            panelStand.GetChild(5).gameObject.GetComponent<Button>().interactable = true;
     }
 }

@@ -16,7 +16,7 @@ public class NoticiasScript : MonoBehaviour
     IEnumerator TextAnimation()
     {
         WWWForm form = new WWWForm();
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/BotFeria.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/BotFeria.php", form))
         {
             yield return www.SendWebRequest();
 

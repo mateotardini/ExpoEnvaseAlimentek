@@ -19,7 +19,7 @@ public class Conferencias : MonoBehaviour
     {
         WWWForm form = new WWWForm();
         form.AddField("Sala", Sala);
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/ConferenciasFeria.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/ConferenciasFeria.php", form))
         {
             yield return www.SendWebRequest();
 

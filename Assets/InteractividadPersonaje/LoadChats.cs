@@ -29,7 +29,7 @@ public class LoadChats : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("User", UserInfo.UserName);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/Load-Chats.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/Load-Chats.php", form))
         {
             yield return www.SendWebRequest();
 
@@ -39,7 +39,8 @@ public class LoadChats : MonoBehaviour
                 Debug.Log(www.error);
             }
             else
-            {                                                //Descargo todos los datos de los chats guardados en mysql.
+            {   
+                //Descargo todos los datos de los chats guardados en mysql.
                 int numeroDeChats = int.Parse(www.downloadHandler.text.Split('|')[0]);
                 if (numeroDeChats != 0)
                 {
@@ -91,7 +92,7 @@ public class LoadChats : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("UserEmail", UserInfo.Email);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/Load-DNIs.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/Load-DNIs.php", form))
         {
             yield return www.SendWebRequest();
 

@@ -23,7 +23,7 @@ public class PhotonLobby : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        lobby = this; //Create the singleton, lives withing the main manu scene.
+        lobby = this;
     }
 
 
@@ -31,7 +31,6 @@ public class PhotonLobby : MonoBehaviourPunCallbacks
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
-        //InvokeRepeating("CheckConnection", 3, 3);//Connect to Master photon server.
     }
 
     void CheckConnection()
@@ -130,7 +129,7 @@ public class PhotonLobby : MonoBehaviourPunCallbacks
         WWWForm form = new WWWForm();
         form.AddField("SesionesIniciadas", 1);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/AnalyticsPrincipal.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/AnalyticsPrincipal.php", form))
         {
             yield return www.SendWebRequest();
 

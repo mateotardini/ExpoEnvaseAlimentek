@@ -25,7 +25,7 @@ public class EmailPassRecover : MonoBehaviour
         form.AddField("loginEmail", loginEmail);
         form.AddField("Tel", telefono);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/PassRecover/Email-Pass-Recover.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/PassRecover/Email-Pass-Recover.php", form))
         {
             yield return www.SendWebRequest();
 

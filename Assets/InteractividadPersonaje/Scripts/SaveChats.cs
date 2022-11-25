@@ -27,7 +27,7 @@ public class SaveChats : MonoBehaviour
         form.AddField("AnotherUserEmail", PhotonChatScript.anotherUserEmail);
         form.AddField("ChatText", chatText);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/Save-Chats.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/Save-Chats.php", form))
         {
             yield return www.SendWebRequest();
 
@@ -53,17 +53,13 @@ public class SaveChats : MonoBehaviour
         form.AddField("AnotherUserEmail", PhotonChatScript.anotherUserEmail);
         form.AddField ("DNIorChat", "Chat");
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/Delete_DNI_Chat.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/Delete_DNI_Chat.php", form))
         {
             yield return www.SendWebRequest();
 
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
-            }
-            else
-            {
-                //Debug.Log(www.downloadHandler.text);
             }
         }
     }

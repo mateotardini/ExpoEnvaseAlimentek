@@ -15,18 +15,12 @@ public class TabNavigation : MonoBehaviour
             {
                 GameObject selected = EventSystem.current.currentSelectedGameObject;
 
-                //try and find the first selectable if there isn't one currently selected
-                //only do it if the findFirstSelectable is true
-                //you may not always want this feature and thus
-                //it is disabled by default
                 if (selected == null && findFirstSelectable)
                 {
                     Selectable found = (Selectable.allSelectableCount > 0) ? Selectable.allSelectablesArray[0] : null;
 
                     if (found != null)
                     {
-                        //simple reference so that selected isn't null and will proceed
-                        //past the next if statement
                         selected = found.gameObject;
                     }
                 }

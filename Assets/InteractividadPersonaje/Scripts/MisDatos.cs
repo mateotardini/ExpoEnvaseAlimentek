@@ -21,7 +21,7 @@ public class MisDatos : MonoBehaviour
     }
 
     public void Abrir_Analiticas() {
-        Application.ExternalEval("window.open('" + "https://expovirtual.com.ar/VirtualExpo/Web/index.html" + "' , '_blank')");
+        Application.ExternalEval("window.open('" + "https://teckdes.com/ExpoVirtual/VirtualExpo/Web/index.html" + "' , '_blank')");
     }
 
     public void ChangeData() {
@@ -39,7 +39,7 @@ public class MisDatos : MonoBehaviour
         form.AddField("newEmail", NewEmail.text);
         form.AddField("newTel", NewTel.text);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/ChangeUserData.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/ChangeUserData.php", form))
         {
             yield return www.SendWebRequest();
 

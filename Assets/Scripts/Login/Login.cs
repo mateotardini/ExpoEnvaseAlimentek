@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Login : MonoBehaviour
 {
-    public InputField UsernameInput;
-    public InputField PasswordInput;
+    public TMP_InputField UsernameInput;
+    public TMP_InputField PasswordInput;
     public Button LoginButton;
     public UserInfo userInfo;
 
@@ -31,9 +32,9 @@ public class Login : MonoBehaviour
 
     public void Registrarse() {
 #if UNITY_WEBGL
-        Application.ExternalEval("window.open('https://expovirtual.com.ar/Esp/acreditacion-v.html' , '_blank')");
+        Application.ExternalEval("window.open('https://teckdes.com/ExpoVirtual/Esp/acreditacion-v.html' , '_blank')");
 #else
-        Application.OpenURL("https://expovirtual.com.ar/Esp/acreditacion-v.html");
+        Application.OpenURL("https://teckdes.com/ExpoVirtual/Esp/acreditacion-v.html");
 #endif
 
     }

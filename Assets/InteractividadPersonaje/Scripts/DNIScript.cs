@@ -93,10 +93,9 @@ public class DNIScript : MonoBehaviour {
         form.AddField("AnotherUserEmail", anotherEmail);
         form.AddField("AnotherUserTel", anotherTel);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/Save-DNIs.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/Save-DNIs.php", form))
         {
             yield return www.SendWebRequest();
-
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -121,10 +120,9 @@ public class DNIScript : MonoBehaviour {
         form.AddField("AnotherUserEmail", anotherEmail);
         form.AddField("DNIorChat", "DNI");
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/Delete_DNI_Chat.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/Delete_DNI_Chat.php", form))
         {
             yield return www.SendWebRequest();
-
 
             if (www.isNetworkError || www.isHttpError)
             {

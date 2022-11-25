@@ -24,7 +24,7 @@ public class EmbedVideos : MonoBehaviour
         if (NumeroDeStand != 0 && NumeroDeVideo != 0)
             StartCoroutine(EmbedVideosPhP());
         if(analitycs != null)
-            analitycs.ClickVideos();
+            analitycs.ClickVideos("N");
     }
 
     [System.Obsolete]
@@ -35,7 +35,7 @@ public class EmbedVideos : MonoBehaviour
         form.AddField("NumeroDeStand", NumeroDeStand);
         form.AddField("URLVideo", "URLVideo" + NumeroDeVideo.ToString());
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/EmbedVideos.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/EmbedVideos.php", form))
         {
             yield return www.SendWebRequest();
 
@@ -47,11 +47,11 @@ public class EmbedVideos : MonoBehaviour
             {
 #if UNITY_WEBGL
                 if(NumeroDeStand != 2)
-                    Application.ExternalEval("window.open('" + "https://expovirtual.com.ar/VirtualExpo/EmbedVideos.php" + "' , 'video','width=560,height=315,left=20,top=20')");
+                    Application.ExternalEval("window.open('" + "https://teckdes.com/ExpoVirtual/VirtualExpo/EmbedVideos.php" + "' , 'video','width=560,height=315,left=20,top=20')");
                 else
-                    Application.ExternalEval("window.open('" + "https://expovirtual.com.ar/VirtualExpo/EmbedVideos.php" + "' , 'video','width=560,height=896,left=20,top=20')");
+                    Application.ExternalEval("window.open('" + "https://teckdes.com/ExpoVirtual/VirtualExpo/EmbedVideos.php" + "' , 'video','width=560,height=896,left=20,top=20')");
 #else
-                Application.OpenURL("https://expovirtual.com.ar/VirtualExpo/EmbedVideosExe.php?NumeroDeStand="+NumeroDeStand.ToString()+"&URLVideo=URLVideo"+NumeroDeVideo.ToString());
+                Application.OpenURL("https://teckdes.com/ExpoVirtual/VirtualExpo/EmbedVideosExe.php?NumeroDeStand="+NumeroDeStand.ToString()+"&URLVideo=URLVideo"+NumeroDeVideo.ToString());
 #endif
             }
         }

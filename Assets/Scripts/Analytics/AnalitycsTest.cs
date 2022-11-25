@@ -7,75 +7,66 @@ using UnityEngine.Networking;
 
 public class AnalitycsTest : MonoBehaviour
 {
-    public string CompanyName, QuienesDescargaronFolletos;
+    public string QuienesDescargaronFolletos;
 
     private void Start()
     {
-        CompanyName = this.gameObject.name.Replace(".", "_");
-        CompanyName = CompanyName.Replace(" ", "_");
-        CompanyName = CompanyName.Replace("(", "_");
-        CompanyName = CompanyName.Replace(")", "_");
         QuienesDescargaronFolletos = UserInfo.UserName + " | " + UserInfo.Name + " | " + UserInfo.Empresa + " | " + UserInfo.Email; 
     }
-    // Start is called before the first frame update
 
     #region Visitas
-    public void VisitasAlStand() {
-        StartCoroutine(VisitasAlStandPhP(CompanyName));
-        StartCoroutine(ClickFolletoDatosPhP(CompanyName, QuienesDescargaronFolletos));
-    }
+    /*public void VisitasAlStand() {
+        StartCoroutine(VisitasAlStandPhP(nombreEmpresa));
+        StartCoroutine(ClickFolletoDatosPhP(nombreEmpresa, QuienesDescargaronFolletos));
+    }*/
 
-    public IEnumerator VisitasAlStandPhP(string CompanyName)
+    public IEnumerator VisitasAlStandPhP(string nombreEmpresa)
     {
         WWWForm form = new WWWForm();
-        form.AddField("CompanyName", CompanyName);
+        form.AddField("CompanyName", nombreEmpresa);
         form.AddField("VisitasAlStand", 1);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/AnalyticsTablaPorEmpresa.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/AnalyticsTablaPorEmpresa.php", form))
         {
             yield return www.SendWebRequest();
-
 
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
             }
-            else
-            {
-                Debug.Log(www.downloadHandler.text);
-            }
+            else{ Debug.Log(www.downloadHandler.text);}
         }
         
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/Analytics.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/Analytics.php", form))
         {
             yield return www.SendWebRequest();
-
 
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
             }
-            else
-            {
-                Debug.Log(www.downloadHandler.text);
-            }
+            else{ Debug.Log(www.downloadHandler.text);}
         }
     }
     #endregion
 
     #region Folletos
-    public void ClickFolleto()
+    public void ClickFolleto(string nombreEmpresa)
     {
-        StartCoroutine(ClickFolletoPhP(CompanyName));
+        nombreEmpresa = nombreEmpresa.Replace(" ", "_");
+        nombreEmpresa = nombreEmpresa.Replace(".", "_");
+        nombreEmpresa = nombreEmpresa.Replace("(", "_");
+        nombreEmpresa = nombreEmpresa.Replace(")", "_");
+        StartCoroutine(ClickFolletoPhP(nombreEmpresa));
     }
 
-    public IEnumerator ClickFolletoPhP(string CompanyName) {
+    public IEnumerator ClickFolletoPhP(string nombreEmpresa) {
 
         WWWForm form = new WWWForm();
-        form.AddField("CompanyName", CompanyName);
+        form.AddField("CompanyName", nombreEmpresa);
         form.AddField("Folletos", 1);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/AnalyticsTablaPorEmpresa.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/AnalyticsTablaPorEmpresa.php", form))
         {
             yield return www.SendWebRequest();
 
@@ -84,121 +75,110 @@ public class AnalitycsTest : MonoBehaviour
             {
                 Debug.Log(www.error);
             }
-            else
-            {
-//                Debug.Log(www.downloadHandler.text);
-            }
+            else{ Debug.Log(www.downloadHandler.text);}
         }
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/Analytics.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/Analytics.php", form))
         {
             yield return www.SendWebRequest();
-
 
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
             }
-            else
-            {
-//                Debug.Log(www.downloadHandler.text);
-            }
+            else{ Debug.Log(www.downloadHandler.text);}
         }
     }
     #endregion
 
     #region Web
-    public void ClickPaginaWeb()
+    public void ClickPaginaWeb(string nombreEmpresa)
     {
-        StartCoroutine(ClickWebPhP(CompanyName));
+        nombreEmpresa = nombreEmpresa.Replace(" ", "_");
+        nombreEmpresa = nombreEmpresa.Replace(".", "_");
+        nombreEmpresa = nombreEmpresa.Replace("(", "_");
+        nombreEmpresa = nombreEmpresa.Replace(")", "_");
+        StartCoroutine(ClickWebPhP(nombreEmpresa));
     }
 
-    public IEnumerator ClickWebPhP(string CompanyName)
+    public IEnumerator ClickWebPhP(string nombreEmpresa)
     {
         WWWForm form = new WWWForm();
-        form.AddField("CompanyName", CompanyName);
+        form.AddField("CompanyName", nombreEmpresa);
         form.AddField("Web", 1);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/AnalyticsTablaPorEmpresa.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/AnalyticsTablaPorEmpresa.php", form))
         {
             yield return www.SendWebRequest();
-
 
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
             }
-            else
-            {
- //               Debug.Log(www.downloadHandler.text);
-            }
+            else{ Debug.Log(www.downloadHandler.text);}
         }
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/Analytics.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/Analytics.php", form))
         {
             yield return www.SendWebRequest();
-
 
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
             }
-            else
-            {
-//                Debug.Log(www.downloadHandler.text);
-            }
+            else{ Debug.Log(www.downloadHandler.text);}
         }
     }
     #endregion
 
     #region Consultas
-    public void ClickConsultas()
+    public void ClickConsultas(string nombreEmpresa)
     {
-        StartCoroutine(ClickConsultasPhP(CompanyName));
+        nombreEmpresa = nombreEmpresa.Replace(" ", "_");
+        nombreEmpresa = nombreEmpresa.Replace(".", "_");
+        nombreEmpresa = nombreEmpresa.Replace("(", "_");
+        nombreEmpresa = nombreEmpresa.Replace(")", "_");
+        StartCoroutine(ClickConsultasPhP(nombreEmpresa));
     }
 
-    public IEnumerator ClickConsultasPhP(string CompanyName)
+    public IEnumerator ClickConsultasPhP(string nombreEmpresa)
     {
         WWWForm form = new WWWForm();
-        form.AddField("CompanyName", CompanyName);
+        form.AddField("CompanyName", nombreEmpresa);
         form.AddField("Consultas", 1);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/AnalyticsTablaPorEmpresa.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/AnalyticsTablaPorEmpresa.php", form))
         {
             yield return www.SendWebRequest();
-
 
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
             }
-            else
-            {
-//                Debug.Log(www.downloadHandler.text);
-            }
+            else{ Debug.Log(www.downloadHandler.text);}
         }
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/Analytics.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/Analytics.php", form))
         {
             yield return www.SendWebRequest();
-
 
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
             }
-            else
-            {
-//                Debug.Log(www.downloadHandler.text);
-            }
+            else{ Debug.Log(www.downloadHandler.text);}
         }
     }
     #endregion
 
     #region Chats
-    public void ChatsIniciados(string companyName)
+    public void ChatsIniciados(string nombreEmpresa)
     {
-        StartCoroutine(ChatsIniciadosPhP(companyName));
+        nombreEmpresa = nombreEmpresa.Replace(" ", "_");
+        nombreEmpresa = nombreEmpresa.Replace(".", "_");
+        nombreEmpresa = nombreEmpresa.Replace("(", "_");
+        nombreEmpresa = nombreEmpresa.Replace(")", "_");
+        StartCoroutine(ChatsIniciadosPhP(nombreEmpresa));
     }
 
     public IEnumerator ChatsIniciadosPhP(string companyName)
@@ -211,101 +191,84 @@ public class AnalitycsTest : MonoBehaviour
         form.AddField("CompanyName", companyName);
         form.AddField("ChatsIniciados", 1);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/AnalyticsTablaPorEmpresa.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/AnalyticsTablaPorEmpresa.php", form))
         {
             yield return www.SendWebRequest();
-
 
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
             }
-            else
-            {
-                Debug.Log(www.downloadHandler.text);
-            }
+            else{ Debug.Log(www.downloadHandler.text);}
         }
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/Analytics.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/Analytics.php", form))
         {
             yield return www.SendWebRequest();
-
 
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
             }
-            else
-            {
-                
-            }
+            else{ Debug.Log(www.downloadHandler.text);}
         }
     }
     #endregion
 
     #region Videos
-    public void ClickVideos()
+    public void ClickVideos(string nombreEmpresa)
     {
-        StartCoroutine(ClickVideosPhP(CompanyName));
+        nombreEmpresa = nombreEmpresa.Replace(" ", "_");
+        nombreEmpresa = nombreEmpresa.Replace(".", "_");
+        nombreEmpresa = nombreEmpresa.Replace("(", "_");
+        nombreEmpresa = nombreEmpresa.Replace(")", "_");
+        StartCoroutine(ClickVideosPhP(nombreEmpresa));
     }
 
-    public IEnumerator ClickVideosPhP(string CompanyName)
+    public IEnumerator ClickVideosPhP(string nombreEmpresa)
     {
         WWWForm form = new WWWForm();
-        form.AddField("CompanyName", CompanyName);
+        form.AddField("CompanyName", nombreEmpresa);
         form.AddField("Videos", 1);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/AnalyticsTablaPorEmpresa.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/AnalyticsTablaPorEmpresa.php", form))
         {
             yield return www.SendWebRequest();
-
 
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
             }
-            else
-            {
-                //Debug.Log(www.downloadHandler.text);
-            }
+            else{ Debug.Log(www.downloadHandler.text);}
         }
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/Analytics.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/Analytics.php", form))
         {
             yield return www.SendWebRequest();
-
 
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
             }
-            else
-            {
-                //Debug.Log(www.downloadHandler.text);
-            }
+            else{ Debug.Log(www.downloadHandler.text);}
         }
     }
     #endregion
-    public IEnumerator ClickFolletoDatosPhP(string CompanyName, string QuienesDescargaronFolletos)
+    public IEnumerator ClickFolletoDatosPhP(string nombreEmpresa, string QuienesDescargaronFolletos)
     {
-
         WWWForm form = new WWWForm();
-        form.AddField("CompanyName", CompanyName);
+        form.AddField("CompanyName", nombreEmpresa);
         form.AddField("QuienesDescargaronFolletos", QuienesDescargaronFolletos);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://expovirtual.com.ar/VirtualExpo/Analytics.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/Analytics.php", form))
         {
             yield return www.SendWebRequest();
-
 
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
             }
-            else
-            {
-                //Debug.Log(www.downloadHandler.text);
-            }
+            else{ Debug.Log(www.downloadHandler.text);}
         }
     }
 }

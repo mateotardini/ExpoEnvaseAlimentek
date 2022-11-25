@@ -13,22 +13,13 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     //Room Info
     public static PhotonRoom room;
     private PhotonView PV;
-    //private AvatarSetup AvatarSetup;
 
-    //public bool isGameLoaded;
     public int currentScene;
     public int multiplayerScene;
 
 
     public GameObject myCharacter;
     public int characterValue;
-
-    //Player Info
-    //Player[] photonPlayers;
-    //public int playersInRoom;
-    //public int myNumberInRoom;
-
-    //public int playersInGame;
 
 
     private void Awake()
@@ -77,11 +68,6 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-//      Debug.Log("WE are in the room now");
-       // photonPlayers = PhotonNetwork.PlayerList;
-       // playersInRoom = photonPlayers.Length;
-      //  myNumberInRoom = playersInRoom;
-       // PhotonNetwork.NickName = myNumberInRoom.ToString();
         {
             StartGame();
         }
@@ -97,10 +83,6 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
                 if (p.NickName == kickPlayer)
                 {
                     PV.RPC("SyncDisconnect", p);
-                    //print("Hay alguien logueado con esta cuenta.");
-                }
-                else { 
-                    //print("Sos el unico con esta cuenta.");
                 }
             }
             return;
@@ -113,7 +95,6 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
                 if (p.NickName == kickPlayer)
                 {
                     PV.RPC("SyncDisconnect", p);
-                    //print("Hay alguien logueado con esta cuenta.");
                 }
                 else
                     print("Sos el unico con esta cuenta.");
@@ -128,14 +109,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         if (currentScene == multiplayerScene)
         {
             {
-                
-                
                 CreatePlayer();
-               /* if (PV.IsMine)
-                {
-                    PV.RPC("RPC_AddCharacter", RpcTarget.AllBuffered, PlayerInfo.PI.mySelectedCharacter);
-                }*/
-
             }
 
         }
@@ -143,8 +117,6 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     }
     private void CreatePlayer()
     {
-        //Vector3 position = new Vector3(-339.4f, 3.10f, -217.4f);
-        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Erick"), position, Quaternion.identity, 0);
         string pjSelected = "";
         switch (PlayerInfo.PI.mySelectedCharacter) {
             case 0:
