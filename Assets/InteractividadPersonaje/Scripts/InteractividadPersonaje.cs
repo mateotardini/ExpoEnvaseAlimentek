@@ -17,7 +17,7 @@ public class InteractividadPersonaje : MonoBehaviour
     public int OnClicksB = 0;
 
     public GameObject gameController;
-    public ControlsTutorial scriptGameController;
+    public GameController scriptGameController;
 
     //Data de este User
     public InfoUsuario infoUsuario;
@@ -34,7 +34,7 @@ public class InteractividadPersonaje : MonoBehaviour
     public int materialpiel, materialremera, materialpantalon;
     private CustomCharacter customCharacter;
 
-    public GameObject ChatPrefab, DNIPrefab, PanelInteraccioPrefab, RequestPrefab, AvisoPrefab;
+    [SerializeField]private GameObject ChatPrefab, BussinesCardPrefab, PanelInteraccioPrefab, RequestPrefab, AvisoPrefab;
 
     private void Awake()
     {
@@ -46,7 +46,7 @@ public class InteractividadPersonaje : MonoBehaviour
 
         gameController = GameObject.Find("GameController");
         if(gameController != null)
-            scriptGameController = gameController.GetComponent<ControlsTutorial>();
+            scriptGameController = gameController.GetComponent<GameController>();
 
         Nombre = UserInfo.UserName;
         Empresa = UserInfo.Empresa;
@@ -61,8 +61,8 @@ public class InteractividadPersonaje : MonoBehaviour
 
         if (PV.IsMine)
             this.PV.RPC("SyncColor", RpcTarget.AllBuffered, currentColorRemera.r, currentColorRemera.g, currentColorRemera.b, currentColorRemera.a, 
-                                                            currentColorPantalon.r, currentColorPantalon.g, currentColorPantalon.b, currentColorPantalon.a,
-                                                            currentColorPiel.r, currentColorPiel.g, currentColorPiel.b ,currentColorPiel.a,materialpiel,materialremera,materialpantalon);
+            currentColorPantalon.r, currentColorPantalon.g, currentColorPantalon.b, currentColorPantalon.a,currentColorPiel.r, currentColorPiel.g, 
+            currentColorPiel.b ,currentColorPiel.a,materialpiel,materialremera,materialpantalon);
         if (PV.IsMine)
         {
             if (this.gameObject.layer == 10)
@@ -95,9 +95,11 @@ public class InteractividadPersonaje : MonoBehaviour
             }
 
             //Si clickeo sobre un stand me abre el panel para interactuar con este y agrega la funcionalidad de los botones.
-            if (Physics.Raycast(ray, out hit, 15f, interactableMask) && scriptGameController.CheckAllClose()) {
+            if (Physics.Raycast(ray, out hit, 40f, interactableMask) && scriptGameController.CheckAllClose()) {
+                
                 if ((hit.transform != null) && (hit.transform != this.transform))
                 {
+                    Debug.Log(hit.transform.gameObject.name);
                     datastandScript = hit.transform.gameObject.GetComponent<Data_Stand>();
                     analytics = hit.transform.gameObject.GetComponent<AnalitycsTest>();
                     if (OnClicksB == 0)
@@ -105,14 +107,14 @@ public class InteractividadPersonaje : MonoBehaviour
                         OnClicksB = 1;
                     }
                     canInteract = true;
-                    if (openPanel == false)
+                    if (!openPanel)
                     {
-                        datastandScript.SetDataDB(scriptGameController.panelStands);
+                        datastandScript.GetDataDB(scriptGameController.panelStands);
                         openPanel = true;
                     }
                     else {
                         Cerrar();
-                        datastandScript.SetDataDB(scriptGameController.panelStands);
+                        datastandScript.GetDataDB(scriptGameController.panelStands);
                         openPanel = true;
                     }
                 }
@@ -246,34 +248,22 @@ public class InteractividadPersonaje : MonoBehaviour
         GameObject DNIToSearch = GameObject.Find("DNI" + anotherUserName);
         if (DNIToSearch == null)
         {
-            Transform TarjetasOrder = scriptGameController.PanelTarjetas.transform.GetChild(3).GetChild(0).GetChild(0);
-            GameObject NewDNI = GameObject.Instantiate(DNIPrefab, Vector2.zero , Quaternion.identity, TarjetasOrder);
-            NewDNI.transform.localPosition = Vector2.zero;
-            NewDNI.name = "DNI" + anotherUserName;
+            Transform TarjetasOrder = scriptGameController.PanelBusinessCards.transform.GetChild(3).GetChild(0).GetChild(0);
+            GameObject newBusinessCard = GameObject.Instantiate(BussinesCardPrefab, Vector2.zero , Quaternion.identity, TarjetasOrder);
             scriptGameController.NuevasNotificaciones[0].SetActive(true);
-            DNIScript script = NewDNI.GetComponent<DNIScript>();
-            script.anotherUserName = anotherUserName;
-            script.anotherName = anotherName;
-            script.anotherEmpresa = anotherEmpresa;
-            script.anotherEmail = anotherEmail;
-            script.anotherTel = anotherTel;
-            script.anotherUserID = anotherUserID;
+            BusinessCardScript script = newBusinessCard.GetComponent<BusinessCardScript>();
+
+            script.SetDataBusinessCard(anotherUserName,anotherName,anotherEmpresa,anotherEmail,anotherTel);
         }
         else
         {
             Destroy(DNIToSearch);
-            Transform TarjetasOrder = scriptGameController.PanelTarjetas.transform.GetChild(3).GetChild(0).GetChild(0);
-            GameObject NewDNI = GameObject.Instantiate(DNIPrefab, Vector2.zero, Quaternion.identity, TarjetasOrder);
-            NewDNI.transform.localPosition = Vector2.zero;
-            NewDNI.name = "DNI" + anotherUserName;
+            Transform TarjetasOrder = scriptGameController.PanelBusinessCards.transform.GetChild(3).GetChild(0).GetChild(0);
+            GameObject newBusinessCard = GameObject.Instantiate(BussinesCardPrefab, Vector2.zero, Quaternion.identity, TarjetasOrder);
             scriptGameController.NuevasNotificaciones[0].SetActive(true);
-            DNIScript script = NewDNI.GetComponent<DNIScript>();
-            script.anotherUserName = anotherUserName;
-            script.anotherName = anotherName;
-            script.anotherEmpresa = anotherEmpresa;
-            script.anotherEmail = anotherEmail;
-            script.anotherTel = anotherTel;
-            script.anotherUserID = anotherUserID;
+            BusinessCardScript script = newBusinessCard.GetComponent<BusinessCardScript>();
+
+            script.SetDataBusinessCard(anotherUserName,anotherName,anotherEmpresa,anotherEmail,anotherTel);
         }
         GameObject NewAviso = GameObject.Instantiate(AvisoPrefab, Vector2.zero, Quaternion.identity, GameObject.Find("FeedBackPos").transform);
         NewAviso.transform.localPosition = Vector2.zero;

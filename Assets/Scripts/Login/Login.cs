@@ -9,7 +9,7 @@ public class Login : MonoBehaviour
     public Button LoginButton;
     public UserInfo userInfo;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         LoginButton.onClick.AddListener(() => {
@@ -23,6 +23,8 @@ public class Login : MonoBehaviour
             StartCoroutine(Main.Instance.Web.Login(UsernameInput.text, PasswordInput.text));
         }
     }
+
+
     public void UpdateFieldPassword()
     {
         string text = PasswordInput.text;//get text from input field

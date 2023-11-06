@@ -131,7 +131,7 @@ MonoBehaviour:
   materialpantalon: 0
   ChatPrefab: {fileID: 8935351781153527516, guid: 9b5876d3d55f3da45a2ed11fac4fc323,
     type: 3}
-  DNIPrefab: {fileID: 4040655329818324992, guid: 15939b01cb0289e4ab758276cda363c5,
+  BussinesCardPrefab: {fileID: 4040655329818324992, guid: 15939b01cb0289e4ab758276cda363c5,
     type: 3}
   PanelInteraccioPrefab: {fileID: 3666187229229652265, guid: 437badae36651294b9e9068521841373,
     type: 3}

@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 4.482, z: 0.065}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1129658687417459220}
   m_Father: {fileID: 6091936644440950748}
@@ -44,6 +45,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -123,6 +125,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1292635161022889342}
   m_RootOrder: 0
@@ -138,6 +141,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -212,6 +216,7 @@ Transform:
   m_LocalRotation: {x: 0.03489949, y: 0, z: 0, w: 0.99939084}
   m_LocalPosition: {x: 0, y: 4.5, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3218298938444065164}
   m_RootOrder: 0
@@ -510,6 +515,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -178.61, y: 3, z: -194.7385}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6398270687256297926}
   - {fileID: 1292635161022889342}
@@ -519,7 +525,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4179599782848899750
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -532,6 +538,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 0
   m_AllowConstantClipSamplingOptimization: 1
@@ -588,7 +595,7 @@ MonoBehaviour:
     m_Bits: 1024
   interactableMask:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 2147483647
   videoMask:
     serializedVersion: 2
     m_Bits: 4096
@@ -607,7 +614,7 @@ MonoBehaviour:
   materialpantalon: 0
   ChatPrefab: {fileID: 8935351781153527516, guid: 9b5876d3d55f3da45a2ed11fac4fc323,
     type: 3}
-  DNIPrefab: {fileID: 4040655329818324992, guid: 15939b01cb0289e4ab758276cda363c5,
+  BussinesCardPrefab: {fileID: 4040655329818324992, guid: 15939b01cb0289e4ab758276cda363c5,
     type: 3}
   PanelInteraccioPrefab: {fileID: 3666187229229652265, guid: 437badae36651294b9e9068521841373,
     type: 3}
@@ -766,6 +773,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5789065310461311706}
   m_Father: {fileID: 6091936644440950748}
@@ -816,6 +824,7 @@ Transform:
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6091936644440950748}
   m_RootOrder: 0
@@ -831,6 +840,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

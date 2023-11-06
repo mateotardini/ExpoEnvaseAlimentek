@@ -8,13 +8,10 @@ using TMPro;
 using UnityEngine.UIElements;
 using UnityEngine.XR.WSA;
 using System.Collections;
-//using UnityEngine.XR.WSA.Input;
-//using WebSocketSharp;
 
 public class PhotonChatManager : MonoBehaviour, IChatClientListener
 {
     #region Setup
-
     [SerializeField] GameObject joinChatButton;
     ChatClient chatClient;
     bool isConnected;
@@ -23,29 +20,27 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
     public UserInfo UserInfo;
     public SaveChats SaveChats;
     public AnalitycsTest analitycsTest;
-    public TMP_Text NombreChat, EmpresaTxt;
+    [SerializeField]private TMP_Text NombreChat, EmpresaTxt;
     public string Receiver, anotherUserEmpresa, anotherUserEmail;
     public string currentChatChannel;
 
     public GameObject ChatPanel, ChatButton, NewMessage, DeletePanel;
     public TMP_Text NombreChatButton;
-    private bool chatOpen = false, chatDeleting = false;
+    private bool _chatOpen = false, _chatDeleting = false;
 
-    public GameObject ChatAbierto, MyMessage, AnotherMessage;
+    [SerializeField]private GameObject ChatAbierto, MyMessage, AnotherMessage;
     public string ChatText = "";
 
     public SaveChats saveChats;
-    public bool CountInAnalitycs = false;
+    private bool _countInAnalitycs = false;
 
-    //public void UsernameOnValueChange(string valueIn)
 
     void Start() {
         NombreChat.text = Receiver;
         NombreChatButton.text = Receiver;
         EmpresaTxt.text = anotherUserEmpresa;
-        chatDisplay.text = ChatText;
 
-        if (UserInfo.TipoDeUsuario == "Expositor" && !CountInAnalitycs) {
+        if (UserInfo.TipoDeUsuario == "Expositor" && !_countInAnalitycs) {
             CompanyName = UserInfo.Empresa;
             analitycsTest.ChatsIniciados(CompanyName);
         }
@@ -56,6 +51,22 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
         ChatPanel.transform.localPosition = Vector2.zero;
     }
 
+    public void SetDataChat(string anotherUser, string empresa, string email, string chatText){
+        name = "Chat" + anotherUser;
+        Receiver = anotherUser;
+        anotherUserEmpresa = empresa;
+        anotherUserEmail = email;
+        chatDisplay.text = chatText;
+
+        GetComponent<RectTransform>().pivot = Vector2.zero;
+        transform.position = Vector2.zero;
+
+        _countInAnalitycs = true;
+        
+        ChatConnectOnClick();
+        transform.GetChild(0).gameObject.SetActive(true);
+    }
+
     public void UsernameOnValueChange()
     {
         //username = valueIn;
@@ -63,17 +74,17 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
     }
 
     public void OpenCloseChat() {
-        if (chatOpen)
+        if (_chatOpen)
         {
             NewMessage.SetActive(false);
             ChatPanel.SetActive(false);
-            chatOpen = false;
+            _chatOpen = false;
         }
         else {
             this.gameObject.transform.parent.GetComponent<ContentChats>().DeactivateAllChats();
             NewMessage.SetActive(false);
             ChatPanel.SetActive(true);
-            chatOpen = true;
+            _chatOpen = true;
         }
     }
 
@@ -84,19 +95,19 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
     public void CloseChat() {
         ChatPanel.SetActive(false);
         ChatButton.SetActive(true);
-        chatOpen = false;
+        _chatOpen = false;
     }
 
     public void DeleteChatPanel() {
-        if (!chatDeleting)
+        if (!_chatDeleting)
         {
             DeletePanel.SetActive(true);
-            chatDeleting = true;
+            _chatDeleting = true;
         }
         else
         {
             DeletePanel.SetActive(false);
-            chatDeleting = false;
+            _chatDeleting = false;
         }
     }
 

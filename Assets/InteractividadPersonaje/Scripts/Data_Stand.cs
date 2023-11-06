@@ -1,20 +1,18 @@
 ﻿using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using System.Collections;
-using UnityEngine.Networking;
 
 public class Data_Stand : MonoBehaviour
 {
-    string NumeroDeStand;
-    public AnalitycsTest analytics;
+    [SerializeField] private string NumeroDeStand;
+    [SerializeField] private AnalitycsTest analytics;
 
     private void Awake()
     {
         NumeroDeStand = this.transform.parent.name.Substring(0, 4);
     }
 
-#region Buttons Panel Stand
+    #region Buttons Panel Stand
     public void OpenConsulta(string url, string nombreEmpresa)
     {
         #if UNITY_WEBGL
@@ -47,55 +45,60 @@ public class Data_Stand : MonoBehaviour
     public void Cerrar(GameObject panelStand) {
         panelStand.SetActive(false);
     }
-#endregion
+    #endregion
 
-#region Get Data from DB
-    public void SetDataDB(GameObject panelStand)
+
+    /*
+     Comment:  Llama a la funcion ConnectDB para obtener la informacion de la base de datos el stand, obteniendo nombe, rubro, ubicacion, descripcion,
+     y urls para los links.
+     Pre: Se ejecuta cuando el usuario clickea sobre el stand designado.
+     Post: Obtiene la informacion y la parsea.
+    */
+    public void GetDataDB(GameObject panelStand)
     {
-        StartCoroutine(GetDataStandFromDB(NumeroDeStand, panelStand));   
-    }
-
-    public IEnumerator GetDataStandFromDB(string NumeroDeStand, GameObject panelStand) {
         WWWForm form = new WWWForm();
         form.AddField("NumeroDeStand", NumeroDeStand);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/GetDataStandFromDB.php", form))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                string nombreEmpresa = www.downloadHandler.text.Split('|')[0];
-                string rubro = www.downloadHandler.text.Split('|')[1];
-                string ubicacion = www.downloadHandler.text.Split('|')[2];
-                string descripcion = www.downloadHandler.text.Split('|')[3];
-                string urlPagina = www.downloadHandler.text.Split('|')[4];
-                string urlPDF = www.downloadHandler.text.Split('|')[5];
-                string urlConsulta = www.downloadHandler.text.Split('|')[6];
-                SetDataToStand(panelStand, nombreEmpresa, rubro, ubicacion, descripcion, urlPagina, urlPDF, urlConsulta);
-            }
-        }
+        StartCoroutine(Main.Instance.ConnectDB("https://teckdes.com/ExpoVirtual/VirtualExpo/GetDataStandFromDB.php", form, (data) => {
+            string nombreEmpresa = data.Split('|')[0];
+            string rubro = data.Split('|')[1];
+            string ubicacion = data.Split('|')[2];
+            string descripcion = data.Split('|')[3];
+            string urlPagina = data.Split('|')[4];
+            string urlPDF = data.Split('|')[5];
+            string urlConsulta = data.Split('|')[6];
+            Debug.Log("Nombre: "+ nombreEmpresa);
+            SetDataToStand(panelStand, nombreEmpresa, rubro, ubicacion, descripcion, urlPagina, urlPDF, urlConsulta);
+        }));
     }
 
+    /*
+     Comment:  Recibe la informacion sobre el stand y le hace un display sobre el canvas del usuario.
+     Pre: GameObject panelStand y strings nombreEmpresa, rubro, ubicacion, descripcion, urls.
+     Post: Display en canvas de la informacion.
+    */
     public void SetDataToStand(GameObject panelStand, string nombreEmpresa, string rubro, string ubicacion, string descripcion, string urlPDF, string urlPagina, string urlConsulta)
     {
-        panelStand.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = nombreEmpresa;
-        panelStand.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = rubro;
-        panelStand.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = descripcion;
+        Transform p_transform = panelStand.transform;
+        p_transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = nombreEmpresa;
+        p_transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = rubro;
+        p_transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = descripcion;
         panelStand.SetActive(true);
 
-        panelStand.transform.GetChild(3).gameObject.GetComponent<Button>().onClick.AddListener(delegate{OpenPDF(urlPDF, nombreEmpresa);});
-        panelStand.transform.GetChild(4).gameObject.GetComponent<Button>().onClick.AddListener(delegate{OpenPaginaWeb(urlPagina, nombreEmpresa);});
-        panelStand.transform.GetChild(5).gameObject.GetComponent<Button>().onClick.AddListener(delegate{OpenConsulta(urlConsulta, nombreEmpresa);});
-        panelStand.transform.GetChild(6).gameObject.GetComponent<Button>().onClick.AddListener(delegate{Cerrar(panelStand);});
-        CheckLinks(panelStand.transform, urlPDF, urlPagina, urlConsulta);
+        p_transform.GetChild(3).gameObject.GetComponent<Button>().onClick.AddListener(delegate{OpenPDF(urlPDF, nombreEmpresa);});
+        p_transform.GetChild(4).gameObject.GetComponent<Button>().onClick.AddListener(delegate{OpenPaginaWeb(urlPagina, nombreEmpresa);});
+        p_transform.GetChild(5).gameObject.GetComponent<Button>().onClick.AddListener(delegate{OpenConsulta(urlConsulta, nombreEmpresa);});
+        p_transform.GetChild(6).gameObject.GetComponent<Button>().onClick.AddListener(delegate{Cerrar(panelStand);});
+        
+        CheckLinks(p_transform, urlPDF, urlPagina, urlConsulta);
     }
-#endregion
 
+
+    /*
+     Comment:  Comprueba que los links no sean nulos y asi activa o desactiva los botones.
+     Pre: Botones y links.
+     Post: Desactiva aquellos que botones no posean links.
+    */
     void CheckLinks(Transform panelStand, string urlPDF, string urlPagina, string urlConsulta)
     {
         if (string.IsNullOrEmpty(urlPDF))

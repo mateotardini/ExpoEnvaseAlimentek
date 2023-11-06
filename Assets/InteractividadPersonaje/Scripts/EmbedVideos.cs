@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Networking;
+﻿using UnityEngine;
 
 public class EmbedVideos : MonoBehaviour
 {
-    public int NumeroDeStand;
-    public int NumeroDeVideo;
+    [SerializeField]private int NumeroDeStand;
+    [SerializeField]private int NumeroDeVideo;
     AnalitycsTest analitycs;
-    string QuienesDescargaronFolletos;
+    private string QuienesDescargaronFolletos;
 
     private void Start()
     {
@@ -21,39 +18,23 @@ public class EmbedVideos : MonoBehaviour
 
     public void PlayEmbedVideo()
     {
-        if (NumeroDeStand != 0 && NumeroDeVideo != 0)
-            StartCoroutine(EmbedVideosPhP());
-        if(analitycs != null)
-            analitycs.ClickVideos("N");
-    }
+        if (NumeroDeStand != 0 && NumeroDeVideo != 0){
+            WWWForm form = new WWWForm();
+            form.AddField("NumeroDeStand", NumeroDeStand);
+            form.AddField("URLVideo", "URLVideo" + NumeroDeVideo.ToString());
 
-    [System.Obsolete]
-    public IEnumerator EmbedVideosPhP()
-    {
-        WWWForm form = new WWWForm();
-
-        form.AddField("NumeroDeStand", NumeroDeStand);
-        form.AddField("URLVideo", "URLVideo" + NumeroDeVideo.ToString());
-
-        using (UnityWebRequest www = UnityWebRequest.Post("https://teckdes.com/ExpoVirtual/VirtualExpo/EmbedVideos.php", form))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-#if UNITY_WEBGL
+            StartCoroutine(Main.Instance.ConnectDB("https://teckdes.com/ExpoVirtual/VirtualExpo/EmbedVideos.php", form, (data) => {
+                #if UNITY_WEBGL
                 if(NumeroDeStand != 2)
                     Application.ExternalEval("window.open('" + "https://teckdes.com/ExpoVirtual/VirtualExpo/EmbedVideos.php" + "' , 'video','width=560,height=315,left=20,top=20')");
                 else
                     Application.ExternalEval("window.open('" + "https://teckdes.com/ExpoVirtual/VirtualExpo/EmbedVideos.php" + "' , 'video','width=560,height=896,left=20,top=20')");
-#else
+                #else
                 Application.OpenURL("https://teckdes.com/ExpoVirtual/VirtualExpo/EmbedVideosExe.php?NumeroDeStand="+NumeroDeStand.ToString()+"&URLVideo=URLVideo"+NumeroDeVideo.ToString());
-#endif
-            }
+                #endif
+            }));
+
+            if(analitycs != null){ analitycs.ClickVideos("N"); }
         }
     }
 }

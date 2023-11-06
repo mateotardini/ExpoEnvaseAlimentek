@@ -18,7 +18,6 @@ public class ExpositorOutOfStand : MonoBehaviour
         if (PV.IsMine && col.name.Contains(UserInfo.Empresa)) {
             colisionDetected.playerMask = InStandAnotherLayer;
             this.gameObject.layer = 10;
-            print("Dentro");
         }
     }
     private void OnTriggerExit(Collider col)
@@ -27,7 +26,6 @@ public class ExpositorOutOfStand : MonoBehaviour
         {
             colisionDetected.playerMask = OutStandAnotherLayer;
             this.gameObject.layer = 9;
-            print("Fuera");
         }
     }
 }

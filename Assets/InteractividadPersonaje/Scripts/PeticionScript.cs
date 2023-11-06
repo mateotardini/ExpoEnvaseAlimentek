@@ -46,7 +46,7 @@ public class PeticionScript : MonoBehaviour
         }
         //Si me enviaron una tarjeta
         else if (typeOfRequest == 1) {
-            GameObject.Find("GameController").GetComponent<ControlsTutorial>().Abrir_CerrarTarjetas();
+            GameObject.Find("GameController").GetComponent<GameController>().Abrir_CerrarTarjetas();
         }
     }
 

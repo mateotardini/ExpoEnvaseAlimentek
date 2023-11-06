@@ -11,7 +11,7 @@ public class MinimapScript : MonoBehaviour
 
     public Transform player;
     private CharacterController characterController;
-    ControlsTutorial GameController;
+    GameController GameController;
 
     public GameObject ResultadosBusquedaPanel;
     public bool OnInput;
@@ -23,7 +23,7 @@ public class MinimapScript : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         characterController = player.GetComponent<CharacterController>();
-        GameController = GameObject.Find("GameController").GetComponent<ControlsTutorial>();
+        GameController = GameObject.Find("GameController").GetComponent<GameController>();
     }
 
     public void CerrarMapa() {
@@ -33,7 +33,7 @@ public class MinimapScript : MonoBehaviour
         ResultadosBusquedaPanel.SetActive(false);
         GameController.mapaActive = true;
         GameController.Abrir_CerrarMapa();
-        GameController.buscadorActive = true;
+        GameController._searcher = true;
         GameController.Abrir_CerrarBuscador();
     }
 
