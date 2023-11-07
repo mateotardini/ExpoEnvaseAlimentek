@@ -595,7 +595,7 @@ MonoBehaviour:
     m_Bits: 1024
   interactableMask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 2048
   videoMask:
     serializedVersion: 2
     m_Bits: 4096
